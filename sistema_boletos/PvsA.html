@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+    <link rel="stylesheet" href="estilos1.css">
+    <title>Perú vs Francia</title>
+</head>
+<body>
+    <main id="main">
+        <section id="left">
+            <div id="head">
+                <h1>Perú vs Alemania</h1>
+                <p>BlockchainTicketZone</p>
+            </div>
+            <h3>07/03/2024</h3>
+        </section>
+        <section id="right">
+            <center><h1>Comprar Ticket</h1></center>
+            <form action="#">
+                <div id="form-card" class="form-field">
+                    <div class="row">
+                        <div class="col">
+                            <center><label for="zona">------ Selecciona tu zona: ------</label><br></center>
+                            <br><center><select id="zona">
+                                <option value="lateral_superior_oriente">Lateral Superior Oriente</option>
+                                <option value="lateral_superior_poniente">Lateral Superior Poniente</option>
+                                <option value="cabecera_superior_norte">Cabecera Superior Norte</option>
+                                <option value="cabecera_superior_sur">Cabecera Superior Sur</option>
+                                <option value="lateral_inferior_oriente">Lateral Inferior Oriente</option>
+                                <option value="lateral_inferior_poniente">Lateral Inferior Poniente</option>
+                                <option value="cabecera_inferior_norte">Cabecera Inferior Norte</option>
+                                <option value="cabecera_inferior_sur">Cabecera Inferior Sur</option>
+                                <option value="premium_sur">Premium Sur</option>
+                                <option value="premium_este">Premium Este</option>
+                                <option value="premium_oeste">Premium Oeste</option>
+                                <option value="premium_norte">Premium Norte</option>
+                            </select></center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><br>
+                            <center><label for="asiento">----- Selecciona tu asiento: -----</label></center><br>
+                            <center><select id="asiento">
+                                <option value="1">Asiento 1</option>
+                                <option value="2">Asiento 2</option>
+                                <option value="3">Asiento 3</option>
+                                <option value="4">Asiento 4</option>
+                                <option value="5">Asiento 5</option>
+                                <option value="6">Asiento 6</option>
+                                <option value="7">Asiento 7</option>
+                                <option value="8">Asiento 8</option>
+                                <option value="9">Asiento 9</option>
+                                <option value="10">Asiento 10</option>
+                                <option value="11">Asiento 11</option>
+                                <option value="12">Asiento 12</option>
+                                <option value="13">Asiento 13</option>
+                                <option value="14">Asiento 14</option>
+                                <option value="15">Asiento 15</option>
+                                <option value="16">Asiento 16</option>
+                                <option value="17">Asiento 17</option>
+                                <option value="18">Asiento 18</option>
+                                <option value="19">Asiento 19</option>
+                                <option value="20">Asiento 20</option>
+                                <option value="21">Asiento 21</option>
+                                <option value="22">Asiento 22</option>
+                                <option value="23">Asiento 23</option>
+                                <option value="24">Asiento 24</option>
+                                <option value="25">Asiento 25</option>
+                            </select></center>
+                        </div>
+                    </div>
+                    
+                    <button onclick="comprarBoleto()">Comprar</button><br>
+
+                    <center><div id="mensaje"></div></center>
+
+                    <span id="hashTransaccion"></span>
+
+  </div>
+            </form>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

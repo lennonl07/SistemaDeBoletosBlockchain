@@ -1,58 +1,61 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Ticket {
-    address public owner;
-    string public eventName;
-    string public eventDate;
-    string public eventLocation;
-    uint256 public ticketPrice;
-    uint256 public totalTickets;
-    uint256 public ticketsSold;
+// Contrato para la compra de boletos de fútbol
+contract CompraBoletos {
 
-    mapping(address => uint256) public ticketBalances;
-
-    event TicketPurchased(address indexed buyer, uint256 numTickets);
-    event RewardReceived(address indexed receiver, uint256 amount);
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can call this function");
-        _;
+    // Estructura para representar un boleto
+    struct Boleto {
+        uint256 precio;
+        uint8 numeroAsiento;
     }
 
-    constructor(
-        string memory _eventName,
-        string memory _eventDate,
-        string memory _eventLocation,
-        uint256 _ticketPrice,
-        uint256 _totalTickets
-    ) {
-        owner = msg.sender;
-        eventName = _eventName;
-        eventDate = _eventDate;
-        eventLocation = _eventLocation;
-        ticketPrice = _ticketPrice;
-        totalTickets = _totalTickets;
-        ticketsSold = 0;
+    // Mapeo de zonas a precios
+    mapping(string => uint256) public precios;
+
+    // Mapeo de asientos a su estado (ocupado o libre)
+    mapping(uint8 => bool) public asientosOcupados;
+
+    // Evento para registrar la compra del boleto
+    event BoletoComprado(address comprador, string zona, uint8 numeroAsiento, uint256 precio);
+
+    // Función para inicializar precios y asientos
+    constructor() {
+        // Inicializar precios para cada zona
+        precios["lateral_superior_oriente"] = 100;
+        precios["lateral_superior_poniente"] = 100;
+        precios["cabecera_superior_norte"] = 100;
+        precios["cabecera_superior_sur"] = 100;
+        precios["lateral_inferior_oriente"] = 100;
+        precios["lateral_inferior_poniente"] = 100;
+        precios["cabecera_inferior_norte"] = 100;
+        precios["cabecera_inferior_sur"] = 100;
+        precios["premium_sur"] = 100;
+        precios["premium_este"] = 100;
+        precios["premium_oeste"] = 100;
+        precios["premium_norte"] = 100;
+        
+        // Inicializar asientos como libres
+        for (uint8 i = 1; i <= 20; i++) {
+            asientosOcupados[i] = false;
+        }
     }
 
-    function purchaseTickets(uint256 numTickets) external payable {
-        require(ticketsSold + numTickets <= totalTickets, "Not enough tickets available");
-        require(msg.value == ticketPrice * numTickets, "Incorrect amount sent");
-    
-        ticketBalances[msg.sender] += numTickets;
-        ticketsSold += numTickets;
-    
-        emit TicketPurchased(msg.sender, numTickets);
+    // Función para comprar un boleto
+    function comprarBoleto(string memory zona, uint8 numeroAsiento) external payable {
+        // Verificar que el asiento esté disponible
+        require(!asientosOcupados[numeroAsiento], "Asiento ocupado");
+
+        // Obtener el precio de la zona
+        uint256 precio = precios[zona];
+
+        // Verificar que el valor enviado sea suficiente
+        require(msg.value >= precio, "Pago insuficiente");
+
+        // Marcar el asiento como ocupado
+        asientosOcupados[numeroAsiento] = true;
+
+        // Emitir evento de compra
+        emit BoletoComprado(msg.sender, zona, numeroAsiento, precio);
     }
-    
-    function receiveReward(uint256 amount) external onlyOwner {
-        require(amount > 0, "Reward amount must be greater than 0");
-        require(amount <= address(this).balance, "Not enough funds in contract");
-    
-        payable(owner).transfer(amount);
-    
-        emit RewardReceived(owner, amount);
-    }
-    
 }
